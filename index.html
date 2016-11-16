@@ -9,9 +9,11 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Joshua G. Mausolf" />
 
+<meta name="date" content="2016-11-16" />
 
-<title>My Website</title>
+<title>Machine Learning in Python</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
@@ -163,6 +168,100 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -195,15 +294,106 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">My Website</h1>
+<h1 class="title toc-ignore">Machine Learning in Python</h1>
+<h4 class="author"><em>Joshua G. Mausolf</em></h4>
+<h4 class="date"><em>November 16, 2016</em></h4>
 
 </div>
 
 
-<p>Hello, Website!</p>
+<div id="prerequisites" class="section level1">
+<h1>Prerequisites:</h1>
+<p>If you have not already done so, you will need to properly install an Anaconda distribution of Python, following the installation <a href="https://uc-cfss.github.io/setup00.html">instructions from the first week</a>.</p>
+<p>I would also recommend installing a friendly text editor for editing scripts such as <a href="https://atom.io">Atom</a>. Once installed, you can start a new script by simply typing in bash <code>atom name_of_your_new_script</code>. You can edit an existing script by using <code>atom name_of_script</code>. <a href="https://www.sublimetext.com">SublimeText</a> also works similar to Atom. Alternatively, you may use a native text editor such as <a href="https://www.linux.com/learn/vim-101-beginners-guide-vim">Vim</a>, but this has a higher learning curve.</p>
+<p><a href="http://stackoverflow.com/questions/22390709/open-atom-editor-from-command-line"><em>Note: If <code>atom</code> does not automatically work, try these solutions</em></a>.</p>
+<p><strong>Further documentation can be found on the <a href="https://github.com/jmausolf/Python_Tutorials/tree/master/Machine_Learning">tutorial README</a>.</strong></p>
+<hr />
+</div>
+<div id="machine-learning-tutorial" class="section level1">
+<h1>Machine Learning Tutorial</h1>
+<p>This module illustrates some basic machine learning in Python using Sci-Kit Learn.</p>
+<p>A fundamental principal is that we do not assume <em>a priori</em> that any single model will be best for the data. Instead, we loop over multiple classifiers and parameterizations. In this way, we can run hundreds of models and select the best one on a variety of metrics, such as precision and recall.</p>
+<div id="example-precision-recall-plot" class="section level3">
+<h3>Example Precision-Recall Plot:</h3>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/jmausolf/Python_Tutorials/master/Machine_Learning/results/example.png" />
+
+</div>
+<hr />
+</div>
+<div id="quick-start-guide" class="section level2">
+<h2>Quick Start Guide</h2>
+<p>Example data for this repository comes from the <a href="http://gss.norc.org/get-the-data/stata">General Social Survey (GSS) 2014</a>. More notes on the data preprocessing are detailed in the <a href="https://github.com/jmausolf/Python_Tutorials/tree/master/Machine_Learning/data">data</a> folder.</p>
+<div id="to-run-the-example-link-to-tutorial-repository" class="section level5">
+<h5>To run the example <a href="https://github.com/jmausolf/Python_Tutorials/tree/master/Machine_Learning">(link to tutorial repository)</a>:</h5>
+<pre class="bash"><code>git clone --recursive https://github.com/jmausolf/Python_Tutorials
+cd Python_Tutorials/Machine_Learning
+python run.py</code></pre>
+<hr />
+</div>
+</div>
+<div id="modifying-the-details" class="section level2">
+<h2>Modifying The Details</h2>
+<p>To modify the default data, outcome variable, or parameters, open the <code>run.py</code> script with your favorite text editor, such as Atom, Sublime, or Vim. Here, you must specify the dataset (as .CSV), the outcome variable you would like to predict (for binary classification), and the features you would like to use to make the predictions.</p>
+<div id="default-example" class="section level4">
+<h4>Default Example:</h4>
+<pre class="python"><code>#Define Data
+dataset  = &#39;file&#39;
+outcome  = &#39;partyid_str_rep&#39;
+features = [&#39;age&#39;, &#39;sex&#39;, &#39;race&#39;, &#39;educ&#39;, &#39;rincome&#39;]</code></pre>
+<p>Once you edit these fields, save the script, and in terminal execute: <code>python run.py</code></p>
+</div>
+<div id="note" class="section level4">
+<h4>Note:</h4>
+<p>Your data may have hundreds of features (independent variables/predictors). If you would like to use all of them (and would rather not type write them all out explicitly) simply uses the <code>--all_features</code> option of the magic loop.</p>
+<pre class="bash"><code>python run.py --all_features True</code></pre>
+<p>Of course, an overlooked aspect thus far is feature development. The GSS data in the example is not in the ideal form. For example, most of the data is categorical. We might want to make indicators for each categorical column, calculate various aggregations or interactions, among other possibilities. An ideal data pipeline might make the changes to the feature set prior running this script.</p>
+<hr />
+</div>
+</div>
+<div id="looking-under-the-hood" class="section level2">
+<h2>Looking Under the Hood:</h2>
+<p>To understand the in’s and out’s of the magic loop <a href="https://github.com/jmausolf/magicloops/blob/master/magicloops.py">(full code here)</a>, let’s first look at a very simple example of the example data on a single model:</p>
+<pre class="python"><code>from sklearn import metrics
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.cross_validation import train_test_split
+import pandas as pd
+
+
+# Define Data
+df = pd.read_csv(&#39;data/gss2014.csv&#39;, index_col=0)
+outcome  = &#39;partyid_str_rep&#39;
+features = [&#39;age&#39;, &#39;sex&#39;, &#39;race&#39;, &#39;educ&#39;, &#39;rincome&#39;]
+
+# Set, X, y, Train-Test Split
+X, y = df[features], df[outcome]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Build Model and Fit
+clf = RandomForestClassifier(n_estimators=10, max_depth=None,
+    min_samples_split=2, random_state=0)
+y_pred = clf.fit(X_train, y_train).predict_proba(X_test)[:,1]
+
+# Calculate Result
+result = metrics.roc_auc_score(y_test, y_pred)
+print(result)</code></pre>
+<p>Here, we are fitting a <a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">Random Forest Model</a>. Here, we set some arguments, such as <code>n_estimators=10</code>. We could have passed other parameter options such as <code>n_estimators=5</code> or <code>n_estimators=100</code>. In the magic loop, we systematically loop over a set of options for <code>n_estimators</code> and other arguments. This process is repeated for other classifiers. In this way, we can estimate hundreds of models with relative ease.</p>
+<div id="now-that-we-have-covered-the-basics-fork-this-repository-and-analyze-your-own-data." class="section level5">
+<h5>Now that we have covered the basics, <a href="https://github.com/jmausolf/Python_Tutorials/blob/master/README.md#fork-destination-box">FORK</a> this repository and analyze your own data.</h5>
+<hr />
+</div>
+<div id="acknowledgements" class="section level4">
+<h4>Acknowledgements</h4>
+<p>This tutorial makes use of a <a href="https://github.com/jmausolf/magicloops">modified submodule</a>, originally forked from <span class="citation">@rayidghani</span> <a href="https://github.com/rayidghani/magicloops">magicloops</a>. It has been updated to run in Python2 or Python3. In addition, my modified fork modifies the plotting code and several of the functions to take a user-specified dataset, outcome variable, and features.</p>
+<hr />
+</div>
+</div>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
